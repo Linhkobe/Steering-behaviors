@@ -109,3 +109,28 @@ Le texte affiché peut être personnalisé, et l'animation se met à jour dynami
 #### L'action de souris: en cliquant sur le canvas, on peut ajouter un nouveau véhicule à l'emplacement du curseur. 
 
 ![alt text](image-3.png)
+
+### 5.5 PathFollowing 
+
+#### Description de canvas: 
+
+- Un chemin en sorte d'un circuit composé de plusieurs points, représenté par une ligne, guide le déplacement des véhicules. 
+
+- Chaque véhicule a un comportement "Wander" et suit le chemin. Les véhicules se déplacent avec des couleurs différentes: 
+    + verts pour les véhicules errants
+    + rouges pour les véhicules rapides (on peut les ajouter en appuyant sur la touche "R" ou "r") 
+    + blancs pour les véhicules ajouté en cliquant la souris. 
+
+- Curseurs interactifs: 
+
+    + Vistesse du Véhicule: contrôler la vitesse maximales des véhicules.
+    + Rayon du Chemin: ajuster la largeur du chemin que le véhicule doivent suivre.
+    + Poids de séparation: déterminer le niveau d'évitement entre les véhicules, pour les garder à distance les uns des autres.
+    + Poids d'Alignement: modifier la tendance des véhicules à s'aligner les uns avec les autres. 
+
+- Les autres actions lorsqu'on teste le canvas: 
+
+    + Clic de la souris: ajouter un nouveau véhicule en blanc à la position du curseur de la souris. 
+    + Les touches "R" ou "r": ajouter un véhicule en rouge rapide, avec une vitesse plus élevée que les autres véhicules.
+
+![alt text](image-4.png)
