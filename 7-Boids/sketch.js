@@ -6,6 +6,8 @@
 const flock = [];
 
 let alignSlider, cohesionSlider, separationSlider;
+let target;
+let obstacles = [];
 
 function setup() {
   createCanvas(1000, 800);
@@ -20,10 +22,27 @@ function setup() {
 
 function draw() {
   background(0);
+  for (let obstacle of obstacles) {
+    obstacle.show();
+    for (let boid of flock) {
+      obstacle.applyRepulsion(boid);
+    }
+  }
+  const target = createVector(mouseX, mouseY);
+  fill(255, 0, 0, 100);
+  noStroke();
+  ellipse(target.x, target.y, 50, 50);
   for (let boid of flock) {
     boid.edges();
     boid.flock(flock);
+    boid.applyRepulsion(target);
     boid.update();
     boid.show();
   }  
+}
+
+function keyPressed() {
+  if (key == 'o') {
+    obstacles.push(new Obstacle(mouseX, mouseY, random(10, 50)));
+  }
 }

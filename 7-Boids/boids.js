@@ -11,6 +11,8 @@ class Boid {
     this.acceleration = createVector();
     this.maxForce = 0.2;
     this.maxSpeed = 5;
+    this.path = [];
+    this.pathLength = 50;
   }
 
   edges() {
@@ -104,6 +106,10 @@ class Boid {
   }
 
   update() {
+    this.path.push(this.position.copy());
+    if (this.path.length > this.pathLength) {
+      this.path.shift();
+    }
     this.position.add(this.velocity);
     this.velocity.add(this.acceleration);
     this.velocity.limit(this.maxSpeed);
@@ -111,8 +117,37 @@ class Boid {
   }
 
   show() {
+    stroke(255, 50);
+    for (let i = 0; i < this.path.length; i++) {
+      let pos = this.path[i];
+      strokeWeight(2);
+      point(pos.x, pos.y);
+
+    }
     strokeWeight(6);
-    stroke(255);
-    point(this.position.x, this.position.y);
+    fill(255);
+    // stroke(255);
+    // point(this.position.x, this.position.y);
+    push();
+    translate(this.position.x, this.position.y);
+    let angle = this.velocity.heading() + PI / 2;
+    rotate(angle);
+    triangle(-6, 3, 6, 3, 0, -12);
+    pop();
+
+  }
+
+  applyRepulsion(target) {
+    let distance = this.position.dist(target);
+    let repulsionRadius = 50;
+    if (distance < repulsionRadius + 10) {
+      let force = p5.Vector.sub(this.position, target);
+      force.setMag(this.maxSpeed);
+      force.sub(this.velocity);
+      force.limit(this.maxForce);
+      this.acceleration.add(force);
+    }
   }
 }
+
+

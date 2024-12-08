@@ -1,7 +1,10 @@
 let pursuer1, pursuer2;
 let target;
+let targets = [];
 let obstacles = [];
 let vehicules = [];
+let vehicles = [];
+// let score = 0;
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -36,16 +39,34 @@ function draw() {
 
   vehicules.forEach(v => {
     // pursuer = le véhicule poursuiveur, il vise un point devant la cible
-    v.applyBehaviors(target, obstacles, vehicules);
-
     // déplacement et dessin du véhicule et de la target
     v.update();
     v.show();
-  });
+    v.applyBehaviors(createVector(mouseX, mouseY), obstacles);
+    targets = targets.filter(target => {
+        if (v.pos.dist(target.pos) < target.r + v.r) {
+            //score++;
+            return false;
+        }
+        return true;
+    });
+});
+
+  fill(255);
+  textSize(32);
+  // text(`Score: ${score}`, 10, 30);
+
+  obstacles = obstacles.filter(o => !o.shouldRemove(pursuer1));
 }
 
 function mousePressed() {
+  let target = new Target(mouseX, mouseY);
+  targets.push(target);
   // TODO : ajouter un obstacle de taille aléatoire à la position de la souris
+
+  let size = random(10, 50);
+  let obstacle = new Obstacle(mouseX, mouseY, size);
+  obstacles.push(obstacle);
 }
 
 function keyPressed() {
